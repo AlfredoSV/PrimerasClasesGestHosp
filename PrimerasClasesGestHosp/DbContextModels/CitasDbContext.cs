@@ -95,7 +95,7 @@ namespace PrimerasClasesGestHosp.DbContextModels
             }
             catch (Exception)
             {
-                throw;
+                res = 0;
             }
             finally
             {
@@ -122,7 +122,7 @@ namespace PrimerasClasesGestHosp.DbContextModels
             }
             catch (Exception)
             {
-                throw;
+                res = 0;
             }
             finally
             {
@@ -151,6 +151,28 @@ namespace PrimerasClasesGestHosp.DbContextModels
                 con.Close();
             }
             return res > 0;
+        }
+
+        public void DeleteCitaPacienteId(Guid id)
+        {
+            var res = 0;
+            var con = new SqlConnection(_connectionString);
+            var cmd = new SqlCommand("DELETE FROM [Cita] WHERE [PacienteId] = @id", con);
+            cmd.Parameters.Add("id", SqlDbType.UniqueIdentifier).Value = id;
+            try
+            {
+                con.Open();
+                res = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                con.Close();
+            }
+           
         }
     }
         

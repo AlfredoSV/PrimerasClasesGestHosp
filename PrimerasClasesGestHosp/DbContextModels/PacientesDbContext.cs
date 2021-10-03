@@ -153,21 +153,33 @@ namespace PrimerasClasesGestHosp.DbContextModels
         {
             var res = 0;
             var con = new SqlConnection(_connectionString);
-            var cmd = new SqlCommand("DELETE FROM [Paciente] WHERE [Id] = @id", con);
-            cmd.Parameters.Add("id", SqlDbType.UniqueIdentifier).Value = id;
-            try
-            {
-                con.Open();
-                res = cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                con.Close();
-            }
+
+            new CitasContext(this._connectionString).DeleteCitaPacienteId(id);
+            
+
+
+                var cmd = new SqlCommand("DELETE FROM [Paciente] WHERE [Id] = @id", con);
+
+                cmd.Parameters.Add("id", SqlDbType.UniqueIdentifier).Value = id;
+                try
+                {
+                    con.Open();
+                    res = cmd.ExecuteNonQuery();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            
+            
+
+            
             return res > 0;
         }
     }
